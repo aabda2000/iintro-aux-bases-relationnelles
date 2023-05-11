@@ -5,7 +5,8 @@ CREATE TABLE users_audit (
   changedat DATETIME DEFAULT NULL,
   action VARCHAR(50) DEFAULT NULL
 );
-#CREATE TRIGGER before_users_update BEFORE
+# Create a trigger
+CREATE TRIGGER before_users_update BEFORE
 UPDATE
   ON users FOR EACH ROW
 INSERT INTO
