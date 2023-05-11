@@ -1,4 +1,3 @@
-use complete;
 DROP table if exists post_topic;
 DROP table if exists topics;
 DROP table if exists posts;
@@ -128,73 +127,3 @@ Alter table
   users
 add
   location POINT NULL;
-update
-  users
-set
-  city = 'Bourges',
-  location = ST_GeomFromText('POINT(47.082470 2.396850)')
-Where
-  id = 1;
-update
-  users
-set
-  city = 'Paris',
-  location = ST_GeomFromText('POINT(48.856613 2.352222)')
-Where
-  id = 2;
-update
-  users
-set
-  city = 'Perpignan',
-  location = ST_GeomFromText('POINT(42.701511 2.894120)')
-Where
-  id = 3;
-Select
-  ST_distance_sphere(
-    (
-      select
-        location
-      from
-        users
-      where
-        city = 'bourges'
-    ),
-    (
-      select
-        location
-      from
-        users
-      where
-        city = 'paris'
-    )
-  ) / 1000 as distance;
-Select
-  city,
-  ST_distance_sphere(
-    location,
-    (
-      select
-        location
-      from
-        users
-      where
-        city = 'bourges'
-    )
-  ) / 1000 as distance
-From
-  users;
-DROP PROCEDURE IF EXISTS GetAllUsers;
-DELIMITER & & CREATE PROCEDURE GetAllUsers(IN idd INT, OUT tuple VARCHAR (250)) BEGIN
-SELECT
-  username INTO tuple
-FROM
-  users
-WHERE
-  id = idd;
-END & & DELIMITER;
-call GetAllUsers(1, @uname);
-select
-  @uname;
-#Client (nom *, rue, ville)
-  #Compte (noCompte *, noSucc, solde)
-  #EstProprio (nom *, noCompte *, dateS)
