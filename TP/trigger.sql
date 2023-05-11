@@ -5,17 +5,19 @@ CREATE TABLE users_audit (
   changedat DATETIME DEFAULT NULL,
   action VARCHAR(50) DEFAULT NULL
 );
-# Create a trigger
-CREATE TRIGGER before_users_update BEFORE
-UPDATE
-  ON users FOR EACH ROW
-INSERT INTO
+
+## Create a trigger
+CREATE TRIGGER before_users_update 
+BEFORE UPDATE ON users 
+FOR EACH ROW
+ INSERT INTO
   users_audit
-SET
+ SET
   action = 'update',
   username = OLD.username,
   changedat = NOW();
-#Tester le trigger
+
+## Tester le trigger
 update
   users
 set
